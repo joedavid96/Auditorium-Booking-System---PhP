@@ -151,21 +151,21 @@ role_check($_SESSION['role'],2);
                                     <label for="staff-name" class="col-sm-2 control-label">Name</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="staff-name" placeholder="Name" aria-required="true">
+                                        <input type="text" class="form-control" name="staff-name" placeholder="Name" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="staff-email" class="col-sm-2 control-label">Email</label>
 
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" name="staff-email" placeholder="Email" aria-required="true">
+                                        <input type="email" class="form-control" name="staff-email" placeholder="Email" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="staff-number" class="col-sm-2 control-label">Contact No.</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="staff-number" placeholder="Contact No." aria-required="true">
+                                        <input type="text" class="form-control" name="staff-number" placeholder="Contact No." required>
                                     </div>
                                 </div>
                     </div>
@@ -219,20 +219,20 @@ role_check($_SESSION['role'],2);
                                     <label for="event-name" class="col-sm-2 control-label">Event Name</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="event-name" placeholder="Name of the Event" aria-required="true">
+                                        <input type="text" class="form-control" name="event-name" placeholder="Name of the Event" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="org-dept" class="col-sm-2 control-label">Organized By</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="org-dept" placeholder="Organized by (Department, Placement, Ecell, NEST etc.)" aria-required="true">
+                                        <input type="text" class="form-control" name="org-dept" placeholder="Organized by (Department, Placement, Ecell, NEST etc.)"required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="guest-particulars" class="col-sm-2 control-label">Guest Particulars</label>
                                     <div class="col-sm-10">
-                                    <textarea name="guest-particulars" class="form-control" rows="2" placeholder="Information about the Attending Guests ( if any )" aria-required="true"></textarea>
+                                    <textarea name="guest-particulars" class="form-control" rows="2" placeholder="Information about the Attending Guests ( if any )" required></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -292,7 +292,7 @@ role_check($_SESSION['role'],2);
                                     <label for="chairs-aud" class="col-sm-2 control-label">Chairs Required for the Audience<br>(Max = 500)</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="chairs-aud" placeholder="No. of chairs required in numbers" aria-required="true">
+                                        <input type="text" class="form-control" name="chairs-aud" placeholder="No. of chairs required in numbers" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -360,7 +360,9 @@ role_check($_SESSION['role'],2);
                                         <button class="btn btn-danger" type="reset">Reset</button>
                                     </div>
                                     <div class="col-sm-1">
-                                        <button id="form-rev" type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+                                             Review
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -368,6 +370,165 @@ role_check($_SESSION['role'],2);
                     </div>
                 </div>
             </form>
+            <div class="modal fade" id="modal-default">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Review Your Application</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="rev-staff-name" class="control-label">Staff Name</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-staff-name" name="rev-staff-name" readonly="readonly" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-staff-email" class="control-label">Staff Email</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-staff-email" name="rev-staff-email" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-staff-number" class="control-label">Staff Contact</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-staff-number" name="rev-staff-number" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-student-name" class="control-label">Student Name</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-student-name" name="rev-student-name" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-student-email" class="control-label">Student Email</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-student-email" name="rev-student-email" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-student-number" class="control-label">Student Contact</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-student-number" name="rev-student-number" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-event-name" class="control-label">Event Name</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-event-name" name="rev-event-name" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-org-dept" class="control-label">Organizing Dept</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-org-dept" name="rev-org-dept" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-guest-particulars" class="control-label">Guest Particulars</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-guest-particulars" name="rev-guest-particulars" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-attending-classes" class="control-label">Attending Classes/Members</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-attending-classes" name="rev-attending-classes" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-event-topic" class="control-label">Event Subject</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-event-topic" name="rev-event-topic" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-event-duration" class="control-label">Event Duration</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-event-duration" name="rev-event-duration" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-chairs-aud" class="control-label">Chairs (Audience)</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-chairs-aud" name="rev-chairs-aud" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-lcdproj" class="control-label">LCD Projector</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-lcdproj" name="rev-lcdproj" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-ac" class="control-label">Air Conditioning</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-ac" name="rev-ac" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-chairs-stg" class="control-label">Chairs (Stage)</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-chairs-stg" name="rev-chairs-stg" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-podium" class="control-label">Podium</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-podium" name="rev-podium" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-oth-req" class="control-label">Other Requirements</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-oth-req" name="rev-oth-req" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-wired-mic" class="control-label">Wired Mic</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-wired-mic" name="rev-wired-mic" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rev-cordl-mic" class="control-label">Cordless Mic</label>
+
+                                <div>
+                                    <input type="text" class="form-control" id="rev-cordl-mic" name="rev-cordl-mic" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                            <button type="submit" data-dismiss="modal" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
         </section>
         <!-- /.content -->
     </div>
@@ -387,7 +548,7 @@ role_check($_SESSION['role'],2);
        var k = $("input[name='event-topic']").val();
        var l = $("input[name='event-duration']").val();
        var m = $("input[name='wired-mic']").val();
-       var n = $("input[name='coordl-mic']").val();
+       var n = $("input[name='cordl-mic']").val();
        var o = $("input[name='chairs-aud']").val();
        var p = $("input[name='lcdproj']").val();
        var q = $("input[name='ac']").val();
@@ -395,8 +556,46 @@ role_check($_SESSION['role'],2);
        var s = $("input[name='podium']").val();
        var t = $("input[name='oth-req']").val();
 
-       $(document).ready(fucntion(){
-           alert("js works");
+       var ra = document.getElementById('rev-staff-name');
+       ra.value = a;
+       var rb = document.getElementById('rev-staff-email');
+       rb.value = b;
+       var rc = document.getElementById('rev-staff-number');
+       rc.value = c;
+       var rd = document.getElementById('rev-student-name');
+       rd.value = d;
+       var re = document.getElementById('rev-student-email');
+       re.value = e;
+       var rf = document.getElementById('rev-student-number');
+       rf.value = f;
+       var rg = document.getElementById('rev-event-name');
+       rg.value = g;
+       var rh = document.getElementById('rev-org-dept');
+       rh.value = h;
+       var ri = document.getElementById('rev-guest-particulars');
+       ri.value = i;
+       var rj = document.getElementById('rev-attending-classes');
+       rj.value = j;
+       var rk = document.getElementById('rev-event-topic');
+       rk.value = k;
+       var rl = document.getElementById('rev-event-duration');
+       rl.value = l;
+       var rm = document.getElementById('rev-wired-mic');
+       rm.value = m;
+       var rn = document.getElementById('rev-cordl-mic');
+       rn.value = n;
+       var ro = document.getElementById('rev-chairs-aud');
+       ro.value = o;
+       var rp = document.getElementById('rev-lcdproj');
+       rp.value = p;
+       var rq = document.getElementById('rev-ac');
+       rq.value = q;
+       var rr = document.getElementById('"rev-chairs-stg');
+       rr.value = r;
+       var rs = document.getElementById('rev-podium');
+       rs.value = s;
+       var rt = document.getElementById('rev-oth-req');
+       rt.value = t;
        });
 
 

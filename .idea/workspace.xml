@@ -11,12 +11,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="book-event.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="book-event.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/user/book-event.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6783">
-              <caret line="399" column="10" lean-forward="true" selection-start-line="399" selection-start-column="10" selection-end-line="399" selection-end-column="10" />
-              <folding />
+            <state relative-caret-position="641">
+              <caret line="591" column="20" lean-forward="true" selection-start-line="591" selection-start-column="20" selection-end-line="591" selection-end-column="20" />
+              <folding>
+                <element signature="e#20652#20659#1#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -51,10 +53,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="view-event.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="view-event.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/user/view-event.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
+            <state relative-caret-position="-4403">
               <caret line="50" column="60" lean-forward="true" selection-start-line="50" selection-start-column="60" selection-end-line="50" selection-end-column="60" />
               <folding />
             </state>
@@ -101,7 +103,7 @@
       <path value="C:\wamp64\www" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="260" />
     <option name="y" value="20" />
     <option name="width" value="1400" />
@@ -181,15 +183,15 @@
       <workItem from="1521556409000" duration="11490000" />
       <workItem from="1521622862661" duration="1294000" />
       <workItem from="1521650550842" duration="2301000" />
-      <workItem from="1521699791020" duration="26597000" />
+      <workItem from="1521699791020" duration="32118000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41682000" />
+    <option name="totallyTimeSpent" value="47203000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1296875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -353,14 +355,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/user/book-event.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6783">
-          <caret line="399" column="10" lean-forward="true" selection-start-line="399" selection-start-column="10" selection-end-line="399" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/user/booking-records.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-374">
@@ -387,9 +381,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/user/view-event.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
+        <state relative-caret-position="-4403">
           <caret line="50" column="60" lean-forward="true" selection-start-line="50" selection-start-column="60" selection-end-line="50" selection-end-column="60" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user/book-event.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="641">
+          <caret line="591" column="20" lean-forward="true" selection-start-line="591" selection-start-column="20" selection-end-line="591" selection-end-column="20" />
+          <folding>
+            <element signature="e#20652#20659#1#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
