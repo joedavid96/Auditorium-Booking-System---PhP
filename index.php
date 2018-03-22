@@ -10,12 +10,12 @@ if(isset($_SESSION['login_user']))
     $row['role'] = $_SESSION['role'] ;
 
     if ($row['role'] == 1) {
-        header("location: /user/");
+        header("location: /admin/");
 
     }
 
     if ($row['role'] == 2) {
-        header("location: /admin/");
+        header("location: /user/");
 
     }
 
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
 
 
-    <title>Eco Letters | Log in</title>
+    <title>Nalli Booking | Log in</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo" style="color: #fff;">
-        <a href="/"><b>Eco</b>Letter</a>
+        <a href="/"><b>Nalli</b>Booking</a>
     </div>
 
     <?php if (isset($error)) {

@@ -13,23 +13,12 @@ function role_check($userrole, $role)
 {
     if($userrole!=$role){
         if ($userrole == 1) {
-            header("location: /student");
-        }
-        if ($userrole == 2) {
-            header("location: /faculty");
-        }
-        if ($userrole == 3) {
-            header("location: /warden");
-        }
-        if ($userrole == 4) {
-            header("location: /hod");
-        }
-        if ($userrole == 5) {
-            header("location: /principal");
-        }
-        if ($userrole == 6) {
             header("location: /admin");
         }
+        if ($userrole == 2) {
+            header("location: /user");
+        }
+
     }
 }
 ?>
