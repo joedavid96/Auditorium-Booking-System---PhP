@@ -283,7 +283,7 @@
       <path value="C:\wamp64\www" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="260" />
     <option name="y" value="20" />
     <option name="width" value="1400" />
@@ -370,15 +370,15 @@
       <workItem from="1521622862661" duration="1294000" />
       <workItem from="1521650550842" duration="2301000" />
       <workItem from="1521699791020" duration="32185000" />
-      <workItem from="1521782637343" duration="29664000" />
+      <workItem from="1521782637343" duration="29699000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76934000" />
+    <option name="totallyTimeSpent" value="76969000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1296875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
