@@ -5,6 +5,67 @@ role_check($_SESSION['role'],2);
 
 $msg="";
 
+
+if(isset($_GET['id']))
+
+{
+    $eid=$_GET['id'];
+
+}
+
+
+
+if(isset($_GET['action']))
+
+{
+
+    if($_GET['action']=="approve") {
+
+        $sql7="UPDATE event_content set verify=1 WHERE eventid=".$eid;
+        $res7=mysqli_query($db, $sql7);
+        if($res7){
+            $sql3="insert into event_status(eventid, userid, hod, principal, fo, smc_main, sec_main, sec, ao_team) VALUES ('$eid', 'sdf',0,0,0,0,0,0,0 )";
+            $res3=mysqli_query($db, $sql3);
+            eventMail($hod_mail, $_GET['id'], $db, "hod");
+            $msg='<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i>Booking Submitted!</h4>
+               Your booking has been successfully submitted. Bookings can be tracked through the Booking Status Page. Thank you.
+              </div>';
+        }else{
+
+            echo 'error';
+        }
+    }
+
+    if($_GET['action']=="delete")
+
+    {
+
+        $sql8="DELETE FROM event_content WHERE eventid=".$_GET['id'];
+        $res8=mysqli_query($db, $sql8);
+        if($res8){
+
+            $msg='<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i>Booking Deleted!</h4>
+                Your booking has been successfully deleted.
+              </div>';
+        }else{
+
+            echo 'error';
+        }
+
+
+
+    }
+
+
+}
+
+
+
+
 if(isset($_POST['submit'])) {
 
 
@@ -37,8 +98,7 @@ if(isset($_POST['submit'])) {
     $res1 = mysqli_query($db, $sql1);
     $count = mysqli_fetch_array($res1);
     $eventid = $count[0]+1;
-    $sql3="insert into event_status(eventid, userid, hod, principal, fo, smc_main, sec_main, sec, ao_team) VALUES ('$eventid', 'sdf',0,0,0,0,0,0,0 )";
-    $res3=mysqli_query($db, $sql3);
+
 
     $sql4 = "INSERT into event_content (eventid, staffname, staffmail, staffnumber, studname, studmail, studnumber, eventname, orgdept, guestdetails, attclasses,
  eventtopic, eventduration, wiredmic, cordlmic, chairsaud, lcdproj, ac, chairsstg, podium, othreq, verify) values ('$eventid', '$staff_name','$staff_mail',
@@ -53,9 +113,8 @@ if(isset($_POST['submit'])) {
 
         $msg='<div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-                Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my entire
-                soul, like these sweet mornings of spring which I enjoy with my whole heart.
+                <h4><i class="icon fa fa-ban"></i>Thank you!</h4>
+               Your booking was recorded successfully. Please Verify your booking before submission. Thank you.
               </div>';
 
     }else{
@@ -63,8 +122,7 @@ if(isset($_POST['submit'])) {
         $msg='<div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-                Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my entire
-                soul, like these sweet mornings of spring which I enjoy with my whole heart.
+                Ooops!! Something went wrong!!
               </div>';
 
 
@@ -121,6 +179,8 @@ if(isset($_POST['submit'])) {
     <link rel="stylesheet" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link rel="stylesheet" href="../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -441,7 +501,77 @@ if(isset($_POST['submit'])) {
                  </div>
                 <div class="col-md-6">
 
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Confirm and Submit</h3>
+                        </div>
+                        <div class="box-body">
 
+
+                            <table id="verify" class="table table-bordered table-hover">
+
+                            <thead>
+
+                            <tr>
+                                <th>
+                                    Event Name
+                                </th>
+                                <th>Confirm
+
+                                </th>
+                                <th>
+                                    Delete
+                                </th>
+
+
+
+
+                            </tr>
+
+
+                            </thead>
+
+                                <tbody>
+
+<?php
+
+
+$sql5="SELECT * from event_content WHERE verify=0";
+$res5=mysqli_query($db, $sql5);
+
+while($row=mysqli_fetch_array($res5))
+{
+
+    echo '<tr>';
+    echo '<td>'.$row["eventname"].'</td>';
+    echo '<td><button type="button" data-toggle="modal" data-target="#eventid-'.$row["eventid"].'" class="btn btn-primary">Verify</button></td>';
+
+    echo '<td><a href="?id='.$row["eventid"].'&action=delete" class="btn btn-danger">Delete</a></td>';
+
+
+
+    echo '</tr>';
+
+
+
+
+
+
+}
+
+
+
+
+
+
+?>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -458,10 +588,18 @@ if(isset($_POST['submit'])) {
 
 
 
+<?php
 
 
+$sql5="SELECT * from event_content WHERE verify=0";
+$res5=mysqli_query($db, $sql5);
 
-            <div class="modal fade" id="modal-default">
+while($row=mysqli_fetch_array($res5))
+{
+
+    ?>
+
+            <div class="modal fade" id="eventid-<?php echo $row['eventid'];?>">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -474,152 +612,161 @@ if(isset($_POST['submit'])) {
                                 <label for="rev-staff-name" class="control-label">Staff Name</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-staff-name" name="rev-staff-name" readonly="readonly" >
+                                    <input type="text" class="form-control" id="rev-staff-name" value="<?php echo $row['staffname'];?> " name="rev-staff-name" readonly="readonly" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-staff-email" class="control-label">Staff Email</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-staff-email" name="rev-staff-email" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-staff-email"value="<?php echo $row['staffmail'];?>" name="rev-staff-email" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-staff-number" class="control-label">Staff Contact</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-staff-number" name="rev-staff-number" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-staff-number" value="<?php echo $row['staffnumber'];?>" name="rev-staff-number" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-student-name" class="control-label">Student Name</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-student-name" name="rev-student-name" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-student-name" value="<?php echo $row['studname'];?>" name="rev-student-name" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-student-email" class="control-label">Student Email</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-student-email" name="rev-student-email" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-student-email" value="<?php echo $row['studmail'];?>" name="rev-student-email" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-student-number" class="control-label">Student Contact</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-student-number" name="rev-student-number" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-student-number" value="<?php echo $row['studnumber'];?>" name="rev-student-number" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-event-name" class="control-label">Event Name</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-event-name" name="rev-event-name" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-event-name" value="<?php echo $row['eventname'];?>" name="rev-event-name" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-org-dept" class="control-label">Organizing Dept</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-org-dept" name="rev-org-dept" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-org-dept" value="<?php echo $row['orgdept'];?>" name="rev-org-dept" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-guest-particulars" class="control-label">Guest Particulars</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-guest-particulars" name="rev-guest-particulars" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-guest-particulars" value="<?php echo $row['guestdetails'];?>" name="rev-guest-particulars" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-attending-classes" class="control-label">Attending Classes/Members</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-attending-classes" name="rev-attending-classes" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-attending-classes" value="<?php echo $row['attclasses'];?>" name="rev-attending-classes" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-event-topic" class="control-label">Event Subject</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-event-topic" name="rev-event-topic" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-event-topic" value="<?php echo $row['eventtopic'];?>" name="rev-event-topic" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-event-duration" class="control-label">Event Duration</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-event-duration" name="rev-event-duration" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-event-duration" value="<?php echo $row['eventduration'];?>" name="rev-event-duration" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-chairs-aud" class="control-label">Chairs (Audience)</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-chairs-aud" name="rev-chairs-aud" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-chairs-aud" value="<?php echo $row['chairsaud'];?>" name="rev-chairs-aud" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-lcdproj" class="control-label">LCD Projector</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-lcdproj" name="rev-lcdproj" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-lcdproj" value="<?php echo $row['lcdproj'];?>" name="rev-lcdproj" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-ac" class="control-label">Air Conditioning</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-ac" name="rev-ac" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-ac" value="<?php echo $row['ac'];?>" name="rev-ac" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-chairs-stg" class="control-label">Chairs (Stage)</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-chairs-stg" name="rev-chairs-stg" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-chairs-stg" value="<?php echo $row['chairsstg'];?>" name="rev-chairs-stg" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-podium" class="control-label">Podium</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-podium" name="rev-podium" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-podium" value="<?php echo $row['podium'];?>" name="rev-podium" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-oth-req" class="control-label">Other Requirements</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-oth-req" name="rev-oth-req" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-oth-req" value="<?php echo $row['othreq'];?>" name="rev-oth-req" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-wired-mic" class="control-label">Wired Mic</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-wired-mic" name="rev-wired-mic" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-wired-mic" value="<?php echo $row['wiredmic'];?>" name="rev-wired-mic" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rev-cordl-mic" class="control-label">Cordless Mic</label>
 
                                 <div>
-                                    <input type="text" class="form-control" id="rev-cordl-mic" name="rev-cordl-mic" readonly="readonly">
+                                    <input type="text" class="form-control" id="rev-cordl-mic" value="<?php echo $row['cordlmic'];?>" name="rev-cordl-mic" readonly="readonly">
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                            <button type="submit" data-dismiss="modal" class="btn btn-primary">Submit</button>
+                            <a href="?id=<?php echo $row['eventid'] ?>&action=approve" class="btn btn-success pull-right">Submit</a>
                         </div>
                     </div>
                     <!-- /.modal-content -->
                 </div>
                 <!-- /.modal-dialog -->
             </div>
+
+<?php
+
+
+}
+
+?>
+
+
         </section>
         <!-- /.content -->
     </div>
@@ -635,6 +782,11 @@ if(isset($_POST['submit'])) {
 
 <!-- Bootstrap 3.3.7 -->
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+
 <!-- Morris.js charts -->
 <script src="../bower_components/raphael/raphael.min.js"></script>
 <script src="../bower_components/morris.js/morris.min.js"></script>
@@ -709,6 +861,14 @@ if(isset($_POST['submit'])) {
         $('.timepicker').timepicker({
             showInputs: false
         })
+    })
+</script>
+
+
+<script>
+    $(function () {
+        $('#verify').DataTable()
+
     })
 </script>
 </body>

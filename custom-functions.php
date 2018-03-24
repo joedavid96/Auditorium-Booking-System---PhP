@@ -145,7 +145,7 @@ function eventMail($to, $eventid, $db, $approve_by){
 
     if($mail->Send())
     {
-        echo "Message was Successfully Sent :)";
+        echo "";
     }
     else
     {
