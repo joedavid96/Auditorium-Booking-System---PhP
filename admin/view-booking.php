@@ -42,7 +42,7 @@ role_check($_SESSION['role'],1);
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-purple sidebar-mini">
+<body class="hold-transition skin-red sidebar-mini">
 <div class="wrapper">
 
     <header class="main-header">
@@ -65,7 +65,7 @@ role_check($_SESSION['role'],1);
                     <!-- Messages: style can be found in dropdown.less-->
 
                     <li>
-                        <a href="../logout.php" ><i class="fas fa-user-circle"></i> Logout</a>
+                        <a href="../logout.php" ><i class="fa fa-sign-out"></i> Logout</a>
                     </li>
                 </ul>
             </div>
@@ -78,7 +78,7 @@ role_check($_SESSION['role'],1);
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="/dist/img/admin.png" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>Admin</p>
@@ -86,23 +86,15 @@ role_check($_SESSION['role'],1);
                 </div>
             </div>
             <!-- search form -->
-            <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-                </div>
-            </form>
+
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">MAIN NAVIGATION</li>
 
                 <li class="active"><a href="view-booking.php"><i class="fa fa-check"></i> <span>Confirmed Booking</span></a></li>
-                <li><a href="manage-booking.php"><i class="fas fa-gears"></i> <span>Manage Events</span></a></li>
-                <li><a href="view-booking.php"><i class="fas fa-mobile"></i> <span>Contact</span></a></li>
+                <li><a href="manage-booking.php"><i class="fa fa-gears"></i> <span>Manage Events</span></a></li>
+                <li><a href="view-booking.php"><i class="fa fa-comment"></i> <span>Contact</span></a></li>
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -129,7 +121,7 @@ role_check($_SESSION['role'],1);
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
             <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-sign-out"></i></a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">

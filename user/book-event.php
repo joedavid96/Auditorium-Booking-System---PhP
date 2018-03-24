@@ -1,6 +1,84 @@
 <?php
 include('../session.php');
+include ('../custom-functions.php');
 role_check($_SESSION['role'],2);
+
+$msg="";
+
+if(isset($_POST['submit'])) {
+
+
+
+
+
+    $staff_name = $_POST['staff-name'];
+    $staff_mail = $_POST['staff-email'];
+    $staff_number = $_POST['staff-number'];
+    $stud_name = $_POST['student-name'];
+    $stud_mail = $_POST['student-email'];
+    $stud_number = $_POST['student-number'];
+    $event_name = $_POST['event-name'];
+    $org_dept = $_POST['org-dept'];
+    $guest_particulars = $_POST['guest-particulars'];
+    $attending_classes = $_POST['attending-classes'];
+    $event_topic = $_POST['event-topic'];
+    $event_duration = $_POST['event-duration'];
+    $wired_mic = $_POST['wired-mic'];
+    $cordl_mic = $_POST['cordl-mic'];
+    $chairs_aud = $_POST['chairs-aud'];
+    $lcd_proj = $_POST['lcdproj'];
+    $ac = $_POST['ac'];
+    $chairs_stg = $_POST['chairs-stg'];
+    $podium = $_POST['podium'];
+    $oth_req = $_POST['oth-req'];
+
+
+    $sql1 = "SELECT eventid from event_content ORDER BY eventid desc LIMIT 1";
+    $res1 = mysqli_query($db, $sql1);
+    $count = mysqli_fetch_array($res1);
+    $eventid = $count[0]+1;
+    $sql3="insert into event_status(eventid, userid, hod, principal, fo, smc_main, sec_main, sec, ao_team) VALUES ('$eventid', 'sdf',0,0,0,0,0,0,0 )";
+    $res3=mysqli_query($db, $sql3);
+
+    $sql4 = "INSERT into event_content (eventid, staffname, staffmail, staffnumber, studname, studmail, studnumber, eventname, orgdept, guestdetails, attclasses,
+ eventtopic, eventduration, wiredmic, cordlmic, chairsaud, lcdproj, ac, chairsstg, podium, othreq, verify) values ('$eventid', '$staff_name','$staff_mail',
+ '$staff_number','$stud_name','$stud_mail','$stud_number','$event_name','$org_dept','$guest_particulars','$attending_classes','$event_topic','$event_duration',
+ '$wired_mic','$cordl_mic','$chairs_aud','$lcd_proj','$ac','$chairs_stg','$podium','$oth_req',0)";
+    $res4=mysqli_query($db, $sql4);
+
+
+
+    if($res4)
+    {
+
+        $msg='<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my entire
+                soul, like these sweet mornings of spring which I enjoy with my whole heart.
+              </div>';
+
+    }else{
+
+        $msg='<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my entire
+                soul, like these sweet mornings of spring which I enjoy with my whole heart.
+              </div>';
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -43,7 +121,6 @@ role_check($_SESSION['role'],2);
     <link rel="stylesheet" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -79,7 +156,7 @@ role_check($_SESSION['role'],2);
                     <!-- Messages: style can be found in dropdown.less-->
 
                     <li>
-                        <a href="../logout.php" ><i class="fa fa-gears"></i> Logout</a>
+                        <a href="../logout.php" ><i class="fa fa-sign-out"></i> Logout</a>
                     </li>
                 </ul>
             </div>
@@ -92,23 +169,15 @@ role_check($_SESSION['role'],2);
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="/dist/img/user.png" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>Alexander Pierce</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    <p>Department</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> User</a>
                 </div>
             </div>
             <!-- search form -->
-            <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-                </div>
-            </form>
+
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
@@ -116,8 +185,8 @@ role_check($_SESSION['role'],2);
 
                 <li><a href="view-event.php"><i class="fa fa-check"></i> <span>Confirmed Booking</span></a></li>
                 <li class="active"><a href="book-event.php"><i class="fa fa-calendar"></i> <span>Book Events</span></a></li>
-                <li><a href="booking-status.php"><i class="fa fa-calendar"></i> <span>Booking Status</span></a></li>
-                <li><a href="booking-records.php"><i class="fa fa-calendar"></i> <span>Booking Records</span></a></li>
+                <li><a href="booking-status.php"><i class="fa fa-circle-o-notch"></i> <span>Booking Status</span></a></li>
+                <li><a href="booking-records.php"><i class="fa fa-folder"></i> <span>Booking Records</span></a></li>
 
             </ul>
         </section>
@@ -136,8 +205,11 @@ role_check($_SESSION['role'],2);
 
         <!-- Main content -->
         <section class="content">
-            <form id="regis-form" action="" method="get" class="form-horizontal">
+            <form action="" method="post" class="form-horizontal">
             <div class="row">
+
+                <?php if(isset($msg)){ echo $msg;} ?>
+
                  <div class="col-md-6">
                     <div class="box box-info">
                         <div class="box-header with-border">
@@ -168,10 +240,11 @@ role_check($_SESSION['role'],2);
                                         <input type="text" class="form-control" name="staff-number" placeholder="Contact No." required>
                                     </div>
                                 </div>
+                            </div>
                     </div>
-                    </div>
-                 </div>
-                <div class="col-md-6">
+
+
+
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">Student Coordinator Credentials</h3>
@@ -198,15 +271,13 @@ role_check($_SESSION['role'],2);
                                 <label for="student-number" class="col-sm-2 control-label">Contact No.</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="staff-number" placeholder="Contact No.">
+                                    <input type="text" class="form-control" name="student-number" placeholder="Contact No.">
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
+
+
                         <div class="box box-info">
                             <div class="box-header with-border">
                                 <h3 class="box-title">About The Event</h3>
@@ -250,13 +321,15 @@ role_check($_SESSION['role'],2);
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="event-duration" class="col-sm-2 control-label">Event Duration</label>
+                                    <label>Date and time range:</label>
+
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <i class="fa fa-clock-o"></i>
                                         </div>
-                                        <input type="text" class="form-control pull-right" name="event-duration">
+                                        <input type="text" name="event-duration" class="form-control pull-right" id="reservationtime">
                                     </div>
+                                    <!-- /.input group -->
                                 </div>
                             </div>
                         </div>
@@ -281,8 +354,9 @@ role_check($_SESSION['role'],2);
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
+
+
+
                         <div class="box box-info">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Event Specifications</h3>
@@ -299,8 +373,8 @@ role_check($_SESSION['role'],2);
                                     <label for="lcdproj" class="col-sm-2 control-label">LCD Projector</label>
                                     <div class="col-sm-10">
                                     <label>
-                                        <input type="radio" name="lcdproj" class="flat-red" value="yes" checked>Yes
-                                        <input type="radio" name="lcdproj" class="flat-red" value="no">No
+                                        <input type="radio" name="lcdproj" class="flat-red" value="1" checked>Yes
+                                        <input type="radio" name="lcdproj" class="flat-red" value="0">No
                                     </label>
                                     </div>
                                 </div>
@@ -344,12 +418,9 @@ role_check($_SESSION['role'],2);
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5">
-                    </div>
-                    <div class="col-md-2">
+
+
+
                         <div class="box box-info">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Confirm and Submit</h3>
@@ -360,16 +431,36 @@ role_check($_SESSION['role'],2);
                                         <button class="btn btn-danger" type="reset">Reset</button>
                                     </div>
                                     <div class="col-sm-1">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
-                                             Review
+                                        <button class="btn btn-primary" type="submit" name="submit" value="submit">
+                                             Submit
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                 </div>
+                <div class="col-md-6">
+
+
+
                 </div>
+
+
+            </div>
+
+
+
+
             </form>
+
+
+
+
+
+
+
+
+
             <div class="modal fade" id="modal-default">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -533,278 +624,15 @@ role_check($_SESSION['role'],2);
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    <script>
-
-       var a = $("input[name='staff-name']").val();
-       var b = $("input[name='staff-email']").val();
-       var c = $("input[name='staff-number']").val();
-       var d = $("input[name='student-name']").val();
-       var e = $("input[name='student-email']").val();
-       var f = $("input[name='student-number']").val();
-       var g = $("input[name='event-name']").val();
-       var h = $("input[name='org-dept']").val();
-       var i = $("input[name='guest-particulars']").val();
-       var j = $("input[name='attending-classes']").val();
-       var k = $("input[name='event-topic']").val();
-       var l = $("input[name='event-duration']").val();
-       var m = $("input[name='wired-mic']").val();
-       var n = $("input[name='cordl-mic']").val();
-       var o = $("input[name='chairs-aud']").val();
-       var p = $("input[name='lcdproj']").val();
-       var q = $("input[name='ac']").val();
-       var r = $("input[name='chairs-stg']").val();
-       var s = $("input[name='podium']").val();
-       var t = $("input[name='oth-req']").val();
-
-       var ra = document.getElementById('rev-staff-name');
-       ra.value = a;
-       var rb = document.getElementById('rev-staff-email');
-       rb.value = b;
-       var rc = document.getElementById('rev-staff-number');
-       rc.value = c;
-       var rd = document.getElementById('rev-student-name');
-       rd.value = d;
-       var re = document.getElementById('rev-student-email');
-       re.value = e;
-       var rf = document.getElementById('rev-student-number');
-       rf.value = f;
-       var rg = document.getElementById('rev-event-name');
-       rg.value = g;
-       var rh = document.getElementById('rev-org-dept');
-       rh.value = h;
-       var ri = document.getElementById('rev-guest-particulars');
-       ri.value = i;
-       var rj = document.getElementById('rev-attending-classes');
-       rj.value = j;
-       var rk = document.getElementById('rev-event-topic');
-       rk.value = k;
-       var rl = document.getElementById('rev-event-duration');
-       rl.value = l;
-       var rm = document.getElementById('rev-wired-mic');
-       rm.value = m;
-       var rn = document.getElementById('rev-cordl-mic');
-       rn.value = n;
-       var ro = document.getElementById('rev-chairs-aud');
-       ro.value = o;
-       var rp = document.getElementById('rev-lcdproj');
-       rp.value = p;
-       var rq = document.getElementById('rev-ac');
-       rq.value = q;
-       var rr = document.getElementById('"rev-chairs-stg');
-       rr.value = r;
-       var rs = document.getElementById('rev-podium');
-       rs.value = s;
-       var rt = document.getElementById('rev-oth-req');
-       rt.value = t;
-       });
 
 
-    </script>
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Create the tabs -->
-        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-        </ul>
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <!-- Home tab content -->
-            <div class="tab-pane" id="control-sidebar-home-tab">
-                <h3 class="control-sidebar-heading">Recent Activity</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                                <p>Will be 23 on April 24th</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-user bg-yellow"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                                <p>New phone +1(800)555-1234</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                                <p>nora@example.com</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                                <p>Execution time 5 seconds</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-                <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Custom Template Design
-                                <span class="label label-danger pull-right">70%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Update Resume
-                                <span class="label label-success pull-right">95%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Laravel Integration
-                                <span class="label label-warning pull-right">50%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Back End Framework
-                                <span class="label label-primary pull-right">68%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-            </div>
-            <!-- /.tab-pane -->
-            <!-- Stats tab content -->
-            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-            <!-- /.tab-pane -->
-            <!-- Settings tab content -->
-            <div class="tab-pane" id="control-sidebar-settings-tab">
-                <form method="post">
-                    <h3 class="control-sidebar-heading">General Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Report panel usage
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Some information about this general settings option
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Allow mail redirect
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Other sets of options are available
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Expose author name in posts
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Allow the user to show his name in blog posts
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Show me as online
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Turn off notifications
-                            <input type="checkbox" class="pull-right">
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Delete chat history
-                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-                </form>
-            </div>
-            <!-- /.tab-pane -->
-        </div>
-    </aside>
-    <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
-         immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-    $.widget.bridge('uibutton', $.ui.button);
-</script>
+
 <!-- Bootstrap 3.3.7 -->
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- Morris.js charts -->
@@ -833,37 +661,6 @@ role_check($_SESSION['role'],2);
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../dist/js/demo.js"></script>
-<!-- jQuery 3 -->
-<script src="../bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Select2 -->
-<script src="../bower_components/select2/dist/js/select2.full.min.js"></script>
-<!-- InputMask -->
-<script src="../plugins/input-mask/jquery.inputmask.js"></script>
-<script src="../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-<script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
-<!-- date-range-picker -->
-<script src="../bower_components/moment/min/moment.min.js"></script>
-<script src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- bootstrap datepicker -->
-<script src="../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!-- bootstrap color picker -->
-<script src="../bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
-<!-- bootstrap time picker -->
-<script src="../plugins/timepicker/bootstrap-timepicker.min.js"></script>
-<!-- SlimScroll -->
-<script src="../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- iCheck 1.0.1 -->
-<script src="../plugins/iCheck/icheck.min.js"></script>
-<!-- FastClick -->
-<script src="../bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../dist/js/demo.js"></script>
-<!-- Page script -->
 <script>
     $(function () {
         //Initialize Select2 Elements
@@ -881,23 +678,6 @@ role_check($_SESSION['role'],2);
         //Date range picker with time picker
         $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
         //Date range as a button
-        $('#daterange-btn').daterangepicker(
-            {
-                ranges   : {
-                    'Today'       : [moment(), moment()],
-                    'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                },
-                startDate: moment().subtract(29, 'days'),
-                endDate  : moment()
-            },
-            function (start, end) {
-                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-            }
-        )
 
         //Date picker
         $('#datepicker').datepicker({
