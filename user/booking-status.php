@@ -81,8 +81,16 @@ role_check($_SESSION['role'],2);
                     <img src="/dist/img/user.png" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>Department</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i>User</a>
+                    <p><?php $un="SELECT dept from login WHERE userid='".$_SESSION['login_user']."'";
+
+                        $rn=mysqli_query($db, $un);
+
+                        $name=mysqli_fetch_array($rn);
+
+                        echo $name['dept'];
+
+                        ?></p>
+                    <a href=""><i class="fa fa-circle text-success"></i>User</a>
                 </div>
             </div>
             <!-- search form -->
