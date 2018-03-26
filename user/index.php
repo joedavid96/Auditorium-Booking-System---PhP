@@ -102,7 +102,7 @@ role_check($_SESSION['role'],2);
 
                 <li><a href="view-event.php"><i class="fa fa-check"></i> <span>Confirmed Booking</span></a></li>
                 <li><a href="book-event.php"><i class="fa fa-calendar"></i> <span>Book Events</span></a></li>
-                <li><a href="booking-status.php"><i class="fa fa-circle-o-notch"></i> <span>Booking Status</span></a></li>
+
                 <li><a href="booking-records.php"><i class="fa fa-folder"></i> <span>Booking Records</span></a></li>
 
             </ul>

@@ -29,7 +29,7 @@ if(isset($_GET['action']))
             eventMail($hod_mail, $_GET['id'], $db, "hod");
             $msg='<div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-ban"></i>Booking Submitted!</h4>
+                <h4><i class="icon  fa-thumbs-up"></i>Booking Submitted!</h4>
                Your booking has been successfully submitted. Bookings can be tracked through the Booking Status Page. Thank you.
               </div>';
         }else{
@@ -48,7 +48,7 @@ if(isset($_GET['action']))
 
             $msg='<div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-ban"></i>Booking Deleted!</h4>
+                <h4><i class="icon  fa-thumbs-up"></i>Booking Deleted!</h4>
                 Your booking has been successfully deleted.
               </div>';
         }else{
@@ -113,7 +113,7 @@ if(isset($_POST['submit'])) {
 
         $msg='<div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-ban"></i>Thank you!</h4>
+                <h4><i class="icon fa  fa-thumbs-up"></i>Thank you!</h4>
                Your booking was recorded successfully. Please Verify your booking before submission. Thank you.
               </div>';
 
@@ -121,7 +121,7 @@ if(isset($_POST['submit'])) {
 
         $msg='<div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                <h4><i class="icon  fa-thumbs-up"></i> Alert!</h4>
                 Ooops!! Something went wrong!!
               </div>';
 
@@ -253,7 +253,7 @@ if(isset($_POST['submit'])) {
 
                 <li><a href="view-event.php"><i class="fa fa-check"></i> <span>Confirmed Booking</span></a></li>
                 <li class="active"><a href="book-event.php"><i class="fa fa-calendar"></i> <span>Book Events</span></a></li>
-                <li><a href="booking-status.php"><i class="fa fa-circle-o-notch"></i> <span>Booking Status</span></a></li>
+
                 <li><a href="booking-records.php"><i class="fa fa-folder"></i> <span>Booking Records</span></a></li>
 
             </ul>
@@ -791,8 +791,8 @@ while($row=mysqli_fetch_array($res5))
 <!-- Bootstrap 3.3.7 -->
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-<script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
 
 <!-- Morris.js charts -->
