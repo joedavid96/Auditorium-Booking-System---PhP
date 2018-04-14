@@ -49,20 +49,21 @@ if(isset($_GET['id']) && isset($_GET['key']) ){
 
         if($res=="reject")
         {
-            echo "rejected";
+
             if($pos=="hod")
             {
-                $sql = "UPDATE event_status SET hod=3 WHERE eventid=".$eventid;
+                $sql = "UPDATE event_status SET hod=2 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
-                    echo "hod operation success";
+                    $url="approve.php";
+                redirect($url);
 
                 }
                 else{
                     echo "hod operation failed";
                 }
             }elseif ($pos=="principal"){
-                $sql = "UPDATE event_status SET principal=3 WHERE eventid=".$eventid;
+                $sql = "UPDATE event_status SET principal=2 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
 
@@ -82,10 +83,10 @@ if(isset($_GET['id']) && isset($_GET['key']) ){
             echo "accepted";
             if($pos=="hod")
             {
-                $sql = "UPDATE event_status SET hod=2 WHERE eventid=".$eventid;
+                $sql = "UPDATE event_status SET hod=1 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
-                    eventMail($principal_mail, 12, $db, "hod" );
+                    eventMail($principal_mail, $eventid, $db, "principal" );
                     echo "hod operation success";
 
                 }
@@ -93,9 +94,10 @@ if(isset($_GET['id']) && isset($_GET['key']) ){
                     echo "hod operation failed";
                 }
             }elseif ($pos=="principal"){
-                $sql = "UPDATE event_status SET principal=2 WHERE eventid=".$eventid;
+                $sql = "UPDATE event_status SET principal=1 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
+                    eventMail($fo_mail, $eventid, $db, "fo" );
                     echo "principal operation success";
 
                 }
@@ -103,9 +105,10 @@ if(isset($_GET['id']) && isset($_GET['key']) ){
                     echo "principal operation failed";
                 }
             }elseif ($pos=="fo"){
-                $sql = "UPDATE event_status SET fo=2 WHERE eventid=".$eventid;
+                $sql = "UPDATE event_status SET fo=1 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
+                    eventMail($smc_main_mail, $eventid, $db, "smc_main" );
                     echo "fo operation success";
 
                 }
@@ -113,9 +116,10 @@ if(isset($_GET['id']) && isset($_GET['key']) ){
                     echo "fo operation failed";
                 }
             }elseif($pos=="smc_main"){
-                $sql = "UPDATE event_status SET smc_main=2 WHERE eventid=".$eventid;
+                $sql = "UPDATE event_status SET smc_main=1 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
+                    eventMail($sec_main_mail, $eventid, $db, "sec_main" );
                     echo "smc_main operation success";
 
                 }
@@ -123,9 +127,10 @@ if(isset($_GET['id']) && isset($_GET['key']) ){
                     echo "smc_main operation failed";
                 }
             }elseif($pos=="sec_main"){
-                $sql = "UPDATE event_status SET sec_main=2 WHERE eventid=".$eventid;
+                $sql = "UPDATE event_status SET sec_main=1 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
+                    eventMail($sec_mail, $eventid, $db, "sec" );
                     echo "sec_main operation success";
 
                 }
@@ -133,9 +138,10 @@ if(isset($_GET['id']) && isset($_GET['key']) ){
                     echo "sec_main operation failed";
                 }
             }elseif($pos=="sec"){
-                $sql = "UPDATE event_status SET sec=2 WHERE eventid=".$eventid;
+                $sql = "UPDATE event_status SET sec=1 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
+                    eventMail($ao_team_mail, $eventid, $db, "ao_team" );
                     echo "sec operation success";
 
                 }
@@ -143,7 +149,7 @@ if(isset($_GET['id']) && isset($_GET['key']) ){
                     echo "sec operation failed";
                 }
             }elseif($pos=="ao_team"){
-                $sql = "UPDATE event_status SET ao_team=2 WHERE eventid=".$eventid;
+                $sql = "UPDATE event_status SET ao_team=1 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
                     echo "ao_team operation success";

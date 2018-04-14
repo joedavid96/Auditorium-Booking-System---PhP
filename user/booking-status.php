@@ -19,6 +19,8 @@ role_check($_SESSION['role'],2);
     <link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
@@ -170,30 +172,30 @@ role_check($_SESSION['role'],2);
                 </div>
                 <div class="col-md-6">
                     <!-- The time line -->
-                    <ul class="timeline">
-                        <!-- timeline time label -->
-                        <li class="time-label">
-                            <i class="fa fa-angle-double-down bg-blue"></i>
-                  <div class="timeline-item">
+                <ul class="timeline">
+                    <!-- timeline time label -->
+                    <li class="time-label">
+                        <i class="fa fa-angle-double-down bg-blue"></i>
+                        <div class="timeline-item">
 
                             <div class="timeline-body"> <h3>
-                                   Your booking was successfully submitted!
+                                    Your booking was successfully submitted!
                                 </h3>
                             </div>
-                  </div>
-                        </li>
+                        </div>
+                    </li>
 
-                        <!-- /.timeline-label -->
-                        <!-- timeline item -->
-                        <li>
-                            <i class="fa fa-angle-double-down bg-blue"></i>
+                    <!-- /.timeline-label -->
+                    <!-- timeline item -->
+                    <li>
+                        <i class="fa fa-angle-double-down bg-blue"></i>
 
-                            <div class="timeline-item">
-                                <span class="time"><i class="fa fa-clock-o"></i></span>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i></span>
 
-                                <h3 class="timeline-header">Head of Department</h3>
+                            <h3 class="timeline-header">Head of Department</h3>
 
-                                <div class="timeline-body"> <h3>
+                            <div class="timeline-body"> <h3>
                                     <?php
 
                                     $sql = "SELECT hod from event_status where eventid=".$_GET['id'];
@@ -203,80 +205,80 @@ role_check($_SESSION['role'],2);
                                     echo status($sts);
 
                                     ?>
-                                    </h3>
-                                </div>
+                                </h3>
                             </div>
-                        </li>
+                        </div>
+                    </li>
 
-                        <li>
-                            <i class="fa fa-angle-double-down bg-blue"></i>
+                    <li>
+                        <i class="fa fa-angle-double-down bg-blue"></i>
 
-                            <div class="timeline-item">
-                                <span class="time"><i class="fa fa-clock-o"></i> </span>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i> </span>
 
-                                <h3 class="timeline-header">Principal</h3>
+                            <h3 class="timeline-header">Principal</h3>
 
-                                <div class="timeline-body"> <h3>
-                                        <?php
+                            <div class="timeline-body"> <h3>
+                                    <?php
 
-                                        $sql1 = "SELECT principal from event_status where eventid=".$_GET['id'];
-                                        $res1 = mysqli_query($db, $sql1);
-                                        $status1 = mysqli_fetch_array($res1);
-                                        $sts1 = $status1 ['principal'];
-                                        echo status($sts1);
+                                    $sql1 = "SELECT principal from event_status where eventid=".$_GET['id'];
+                                    $res1 = mysqli_query($db, $sql1);
+                                    $status1 = mysqli_fetch_array($res1);
+                                    $sts1 = $status1 ['principal'];
+                                    echo status($sts1);
 
-                                        ?>
-                                    </h3>
-                                </div>
+                                    ?>
+                                </h3>
                             </div>
-                        </li>
-                        <li>
-                            <i class="fa fa-angle-double-down bg-blue"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-angle-double-down bg-blue"></i>
 
-                            <div class="timeline-item">
-                                <span class="time"><i class="fa fa-clock-o"></i> </span>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i> </span>
 
-                                <h3 class="timeline-header">Maintenance Officials</h3>
+                            <h3 class="timeline-header">Maintenance Officials</h3>
 
-                                <div class="timeline-body"> <h3>
-                                        <?php
+                            <div class="timeline-body"> <h3>
+                                    <?php
 
-                                        $sql2 = "SELECT sec from event_status where eventid=".$_GET['id'];
-                                        $res2 = mysqli_query($db, $sql2);
-                                        $status2 = mysqli_fetch_array($res2);
-                                        $sts2 = $status2 ['sec'];
-                                        echo status($sts2);
+                                    $sql2 = "SELECT sec from event_status where eventid=".$_GET['id'];
+                                    $res2 = mysqli_query($db, $sql2);
+                                    $status2 = mysqli_fetch_array($res2);
+                                    $sts2 = $status2 ['sec'];
+                                    echo status($sts2);
 
-                                        ?>
-                                    </h3>
-                                </div>
+                                    ?>
+                                </h3>
                             </div>
-                        </li>
-                        <li>
-                            <i class="fa fa-angle-double-down bg-blue"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-angle-double-down bg-blue"></i>
 
-                            <div class="timeline-item">
-                                <span class="time"><i class="fa fa-clock-o"></i> ></span>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i> ></span>
 
-                                <h3 class="timeline-header">Administration Team!</h3>
+                            <h3 class="timeline-header">Administration Team!</h3>
 
-                                <div class="timeline-body"> <h3>
-                                        <?php
+                            <div class="timeline-body"> <h3>
+                                    <?php
 
-                                        $sql3 = "SELECT ao_team from event_status where eventid=".$_GET['id'];
-                                        $res3 = mysqli_query($db, $sql3);
-                                        $status3 = mysqli_fetch_array($res3);
-                                        $sts3 = $status3 ['ao_team'];
-                                        echo status($sts3);
+                                    $sql3 = "SELECT ao_team from event_status where eventid=".$_GET['id'];
+                                    $res3 = mysqli_query($db, $sql3);
+                                    $status3 = mysqli_fetch_array($res3);
+                                    $sts3 = $status3 ['ao_team'];
+                                    echo status($sts3);
 
-                                        ?>
-                                    </h3>
-                                    <h5>Nalli Arangam is Ready for your Event!</h5>
-                                </div>
+                                    ?>
+                                </h3>
+                                <h5>Nalli Arangam is Ready for your Event!</h5>
                             </div>
-                        </li>
-                    </ul>
-                </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
                 <!-- /.col -->
             </div>
         </section>
@@ -317,6 +319,9 @@ role_check($_SESSION['role'],2);
 <!-- jvectormap -->
 <script src="../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
 <script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<!-- DataTables -->
+<script src="../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- jQuery Knob Chart -->
 <script src="../bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
 <!-- daterangepicker -->
@@ -336,6 +341,12 @@ role_check($_SESSION['role'],2);
 <script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+<script>
+    $(function () {
+        $('#statusTrack').DataTable()
+
+    })
+</script>
 </body>
 </html>
 

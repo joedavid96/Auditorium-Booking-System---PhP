@@ -1,5 +1,6 @@
 <?php
 include('../session.php');
+include('../custom-functions.php');
 role_check($_SESSION['role'],1);
 ?>
 <!DOCTYPE html>
@@ -84,7 +85,7 @@ role_check($_SESSION['role'],1);
                 </div>
                 <div class="pull-left info">
                     <p>Admin</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    <a href=""><i class="fa fa-circle text-success"></i>Online</a>
                 </div>
             </div>
             <!-- search form -->
@@ -94,8 +95,8 @@ role_check($_SESSION['role'],1);
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">MAIN NAVIGATION</li>
 
-                <li><a href="view-booking.php"><i class="fa fa-check"></i> <span>Confirmed Booking</span></a></li>
-                <li class="active"><a href="manage-booking.php"><i class="fa fa-gears"></i> <span>Manage Events</span></a></li>
+                <li class="active"><a href="view-booking.php"><i class="fa fa-check"></i> <span>Confirmed Booking</span></a></li>
+                <li><a href="manage-booking.php"><i class="fa fa-gears"></i> <span>Manage Events</span></a></li>
                 <li><a href="change-password.php"><i class="fa fa-gear"></i> <span>Change Password</span></a></li>
 
             </ul>
@@ -106,66 +107,173 @@ role_check($_SESSION['role'],1);
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
 
-        </section>
 
         <!-- Main content -->
         <section class="content">
 
             <div class="row">
+                <div class="col-md-6">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><b>Confirmed Bookings</b></h3>
+                    </div>
+                    <div class="box-body">
 
 
+                        <table id="viewEvent" class="table table-bordered table-hover">
 
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Confirmed Bookings</b></h3>
-                        </div>
-                        <div class="box-body">
+                            <thead>
 
-
-                            <table id="viewEvent" class="table table-bordered table-hover">
-
-                                <thead>
-
-                                <tr>
-                                    <th> Event Name </th>
-                                    <th> Date </th>
-                                    <th> View Event </th>
-                                    <th> Assign  </th>
-                                </tr>
+                            <tr>
+                                <th> Event Name </th>
+                                <th> Date </th>
+                                <th> View Event </th>
+                                <th> View Status </th>
+                            </tr>
 
 
-                                </thead>
-                                <tbody>
+                            </thead>
+                            <tbody>
 
 
-                                <?php
+                            <?php
 
 
-                                $sql="SELECT * from event_content WHERE verify=1";
-                                $res=mysqli_query($db, $sql);
-                                $sql1="SELECT * from event_status WHERE verify=1";
-                                $res1=mysqli_query($db, $sql1);
+                            $sql="SELECT * from event_content WHERE verify=1";
+                            $res=mysqli_query($db, $sql);
+                            $sql1="SELECT * from event_status WHERE verify=1";
+                            $res1=mysqli_query($db, $sql1);
 
-                                while($row=mysqli_fetch_array($res)) {
+                            while($row=mysqli_fetch_array($res)) {
 
-                                    echo '<tr>';
-                                    echo '<td>' . $row["eventname"] . '</td>';
-                                    echo '<td>' . $row["eventduration"] . '</td>';
-                                    echo '<td><button type="button" data-toggle="modal" data-target="#eventid-'.$row["eventid"].'" class="btn btn-primary">Open</button></td>';
-                                    echo '<td><a href="assign-event.php?id=' . $row["eventid"] .'" class="btn btn-success">Assign Event</a></td>';
-                                    echo '</tr>';
-                                }
-                                ?>
-
+                                echo '<tr>';
+                                echo '<td>' . $row["eventname"] . '</td>';
+                                echo '<td>' . $row["eventduration"] . '</td>';
+                                echo '<td><button type="button" data-toggle="modal" data-target="#eventid-'.$row["eventid"].'" class="btn btn-primary">Open</button></td>';
+                                echo '<td><a href="event-status.php?id=' . $row["eventid"] .'" class="btn btn-success">Track Status</a></td>';
+                                echo '</tr>';
+                            }
+                            ?>
 
 
 
 
-                                </tbody>
-                            </table>
-                        </div>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-6">
+
+                    <!-- The time line -->
+                    <ul class="timeline">
+                        <!-- timeline time label -->
+                        <li class="time-label">
+                            <i class="fa fa-angle-double-down bg-blue"></i>
+                            <div class="timeline-item">
+
+                                <div class="timeline-body"> <h3>
+                                        Your booking was successfully submitted!
+                                    </h3>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- /.timeline-label -->
+                        <!-- timeline item -->
+                        <li>
+                            <i class="fa fa-angle-double-down bg-blue"></i>
+
+                            <div class="timeline-item">
+                                <span class="time"><i class="fa fa-clock-o"></i></span>
+
+                                <h3 class="timeline-header">Head of Department</h3>
+
+                                <div class="timeline-body"> <h3>
+                                        <?php
+
+                                        $sql = "SELECT hod from event_status where eventid=".$_GET['id'];
+                                        $res = mysqli_query($db, $sql);
+                                        $status = mysqli_fetch_array($res);
+                                        $sts = $status ['hod'];
+                                        echo status($sts);
+
+                                        ?>
+                                    </h3>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <i class="fa fa-angle-double-down bg-blue"></i>
+
+                            <div class="timeline-item">
+                                <span class="time"><i class="fa fa-clock-o"></i> </span>
+
+                                <h3 class="timeline-header">Principal</h3>
+
+                                <div class="timeline-body"> <h3>
+                                        <?php
+
+                                        $sql1 = "SELECT principal from event_status where eventid=".$_GET['id'];
+                                        $res1 = mysqli_query($db, $sql1);
+                                        $status1 = mysqli_fetch_array($res1);
+                                        $sts1 = $status1 ['principal'];
+                                        echo status($sts1);
+
+                                        ?>
+                                    </h3>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-double-down bg-blue"></i>
+
+                            <div class="timeline-item">
+                                <span class="time"><i class="fa fa-clock-o"></i> </span>
+
+                                <h3 class="timeline-header">Maintenance Officials</h3>
+
+                                <div class="timeline-body"> <h3>
+                                        <?php
+
+                                        $sql2 = "SELECT sec from event_status where eventid=".$_GET['id'];
+                                        $res2 = mysqli_query($db, $sql2);
+                                        $status2 = mysqli_fetch_array($res2);
+                                        $sts2 = $status2 ['sec'];
+                                        echo status($sts2);
+
+                                        ?>
+                                    </h3>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-double-down bg-blue"></i>
+
+                            <div class="timeline-item">
+                                <span class="time"><i class="fa fa-clock-o"></i> ></span>
+
+                                <h3 class="timeline-header">Administration Team!</h3>
+
+                                <div class="timeline-body"> <h3>
+                                        <?php
+
+                                        $sql3 = "SELECT ao_team from event_status where eventid=".$_GET['id'];
+                                        $res3 = mysqli_query($db, $sql3);
+                                        $status3 = mysqli_fetch_array($res3);
+                                        $sts3 = $status3 ['ao_team'];
+                                        echo status($sts3);
+
+                                        ?>
+                                    </h3>
+                                    <h5>Nalli Arangam is Ready for your Event!</h5>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
 
                 </div>
             </div>
@@ -354,6 +462,7 @@ role_check($_SESSION['role'],1);
 
         <!-- /.content -->
     </div>
+    <!-- /.content-wrapper -->
 
 
     <!-- Control Sidebar -->
@@ -366,43 +475,45 @@ role_check($_SESSION['role'],1);
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
-<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
-<script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-
+<script>
+    $.widget.bridge('uibutton', $.ui.button);
+</script>
 <!-- Bootstrap 3.3.7 -->
-<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- Morris.js charts -->
-<script src="/bower_components/raphael/raphael.min.js"></script>
-<script src="/bower_components/morris.js/morris.min.js"></script>
+<script src="../bower_components/raphael/raphael.min.js"></script>
+<script src="../bower_components/morris.js/morris.min.js"></script>
 <!-- Sparkline -->
-<script src="/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+<script src="../bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
 <!-- jvectormap -->
-<script src="/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
 <!-- jQuery Knob Chart -->
-<script src="/bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="/bower_components/moment/min/moment.min.js"></script>
-<script src="/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="../bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
 <!-- DataTables -->
 <script src="../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- daterangepicker -->
+<script src="../bower_components/moment/min/moment.min.js"></script>
+<script src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <!-- datepicker -->
-<script src="/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <!-- Bootstrap WYSIHTML5 -->
-<script src="/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <!-- Slimscroll -->
-<script src="/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
-<script src="/bower_components/fastclick/lib/fastclick.js"></script>
+<script src="../bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
-<script src="/dist/js/adminlte.min.js"></script>
+<script src="../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="/dist/js/pages/dashboard.js"></script>
+<script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="/dist/js/demo.js"></script>
+<script src="../dist/js/demo.js"></script>
 <script>
     $(function () {
         $('#viewEvent').DataTable()

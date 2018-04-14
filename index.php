@@ -102,17 +102,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
     <style>
-        body {
 
-        }
     </style>
 
 
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background: url(https://blackrockdigital.github.io/startbootstrap-new-age/img/bg-pattern.png), #17c0eb;
+            background: url(https://blackrockdigital.github.io/startbootstrap-new-age/img/bg-pattern.png), -webkit-linear-gradient(to left, #130f40, #17c0eb);
+            background: url(https://blackrockdigital.github.io/startbootstrap-new-age/img/bg-pattern.png), linear-gradient(to left, #130f40, #17c0eb);
+">
 <div class="login-box">
     <div class="login-logo" style="color: #fff;">
-        <a href="/"><b>Nalli</b>Booking</a>
+        <a style="color: white" href="/"><b>Nalli</b>Booking</a>
     </div>
 
     <?php if (isset($error)) {

@@ -24,7 +24,7 @@ if(isset($_GET['action']))
         $sql7="UPDATE event_content set verify=1 WHERE eventid=".$eid;
         $res7=mysqli_query($db, $sql7);
         if($res7){
-            $sql3="insert into event_status(eventid, userid, hod, principal, fo, smc_main, sec_main, sec, ao_team) VALUES ('$eid', 'sdf',0,0,0,0,0,0,0 )";
+            $sql3="INSERT into event_status(eventid, hod, principal, fo, smc_main, sec_main, sec, ao_team) VALUES ('$eid',0,0,0,0,0,0,0 )";
             $res3=mysqli_query($db, $sql3);
             eventMail($hod_mail, $_GET['id'], $db, "hod");
             $msg='<div class="alert alert-success alert-dismissible">
@@ -98,6 +98,12 @@ if(isset($_POST['submit'])) {
     $res1 = mysqli_query($db, $sql1);
     $count = mysqli_fetch_array($res1);
     $eventid = $count[0]+1;
+
+
+    $sql2="SELECT dept from login WHERE userid='".$_SESSION['login_user']."'";
+    $res2=mysqli_query($db, $sql2);
+    $count2=mysqli_fetch_array($res2);
+    $dept = $count2['dept'];
 
 
     $sql4 = "INSERT into event_content (eventid, staffname, staffmail, staffnumber, studname, studmail, studnumber, eventname, orgdept, guestdetails, attclasses,
@@ -410,13 +416,13 @@ if(isset($_POST['submit'])) {
                                     <label for="mic" class="col-sm-3 control-label">Wired Mic</label>
                                     <div class="col-sm-2">
                                         <label>
-                                            <input name="wired-mic" type="checkbox" value="yes" class="flat-red">
+                                            <input name="wired-mic" type="checkbox" value="Yes" class="flat-red">
                                         </label>
                                     </div>
                                     <label for="mic" class="col-sm-3 control-label">Cordless Mic</label>
                                     <div class="col-sm-2">
                                         <label>
-                                            <input name="cordl-mic" type="checkbox" value="yes" class="flat-red">
+                                            <input name="cordl-mic" type="checkbox" value="Yes" class="flat-red">
                                         </label>
                                     </div>
                                 </div>
@@ -441,8 +447,8 @@ if(isset($_POST['submit'])) {
                                     <label for="lcdproj" class="col-sm-2 control-label">LCD Projector</label>
                                     <div class="col-sm-10">
                                     <label>
-                                        <input type="radio" name="lcdproj" class="flat-red" value="1" checked>Yes
-                                        <input type="radio" name="lcdproj" class="flat-red" value="0">No
+                                        <input type="radio" name="lcdproj" class="flat-red" value="Yes" checked>Yes
+                                        <input type="radio" name="lcdproj" class="flat-red" value="No">No
                                     </label>
                                     </div>
                                 </div>
@@ -450,8 +456,8 @@ if(isset($_POST['submit'])) {
                                     <label for="ac" class="col-sm-2 control-label">Air Conditioning</label>
                                     <div class="col-sm-10">
                                         <label>
-                                            <input type="radio" name="ac" class="flat-red" value="yes" checked>Yes
-                                            <input type="radio" name="ac" class="flat-red" value="no">No
+                                            <input type="radio" name="ac" class="flat-red" value="Yes" checked>Yes
+                                            <input type="radio" name="ac" class="flat-red" value="No">No
                                         </label>
                                     </div>
                                 </div>
@@ -473,8 +479,8 @@ if(isset($_POST['submit'])) {
                                     <label for="podium" class="col-sm-2 control-label">Podium Required</label>
                                     <div class="col-sm-10">
                                         <label>
-                                            <input type="radio" name="podium" class="flat-red" value="yes" checked>Yes
-                                            <input type="radio" name="podium" class="flat-red" value="no">No
+                                            <input type="radio" name="podium" class="flat-red" value="Yes" checked>Yes
+                                            <input type="radio" name="podium" class="flat-red" value="No">No
                                         </label>
                                     </div>
                                 </div>
