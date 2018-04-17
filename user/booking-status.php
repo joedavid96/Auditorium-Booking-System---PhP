@@ -145,16 +145,24 @@ role_check($_SESSION['role'],2);
                                 <?php
 
 
-                                $sql="SELECT * from event_content WHERE verify=1";
+                                $un="SELECT dept from login WHERE userid='".$_SESSION['login_user']."'";
+
+                                $rn=mysqli_query($db, $un);
+
+                                $name=mysqli_fetch_array($rn);
+
+                                $dept = $name['dept'];
+
+
+                                $sql="SELECT * FROM `event_content` WHERE verify=1 AND dept='".$dept."'";
                                 $res=mysqli_query($db, $sql);
-                                $sql1="SELECT * from event_status WHERE verify=1";
-                                $res1=mysqli_query($db, $sql1);
 
                                 while($row=mysqli_fetch_array($res)) {
 
                                     echo '<tr>';
                                     echo '<td>' . $row["eventname"] . '</td>';
                                     echo '<td>' . $row["eventduration"] . '</td>';
+                                    echo '<td><button type="button" data-toggle="modal" data-target="#eventid-'.$row["eventid"].'" class="btn btn-primary">Open</button></td>';
                                     echo '<td><a href="booking-status.php?id=' . $row["eventid"] .'" class="btn btn-success">Track Status</a></td>';
 
                                     echo '</tr>';
@@ -177,10 +185,25 @@ role_check($_SESSION['role'],2);
                     <li class="time-label">
                         <i class="fa fa-angle-double-down bg-blue"></i>
                         <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i>
 
-                            <div class="timeline-body"> <h3>
+                                <?php
+                                $eid=$_GET['id'];
+                                    $sql4="SELECT * FROM status_timestamp WHERE eventid=".$eid;
+                                    $res4=mysqli_query($db,$sql4);
+                                    $count=mysqli_fetch_array($res4);
+                                    $time= $count['submit'];
+                                    $date=datetime($time);
+                                    echo $date;
+                                ?>
+
+                            </span>
+                            <h3 class="timeline-header">Booking Submission</h3>
+                            <div class="timeline-body">
+                                <h3>
                                     Your booking was successfully submitted!
                                 </h3>
+
                             </div>
                         </div>
                     </li>
@@ -191,7 +214,19 @@ role_check($_SESSION['role'],2);
                         <i class="fa fa-angle-double-down bg-blue"></i>
 
                         <div class="timeline-item">
-                            <span class="time"><i class="fa fa-clock-o"></i></span>
+                            <span class="time"><i class="fa fa-clock-o"></i>
+
+                                <?php
+                                $eid=$_GET['id'];
+                                $sql4="SELECT * FROM status_timestamp WHERE eventid=".$eid;
+                                $res4=mysqli_query($db,$sql4);
+                                $count=mysqli_fetch_array($res4);
+                                $time= $count['hod'];
+                                $date=datetime($time);
+                                echo $date;
+                                ?>
+
+                            </span>
 
                             <h3 class="timeline-header">Head of Department</h3>
 
@@ -214,7 +249,19 @@ role_check($_SESSION['role'],2);
                         <i class="fa fa-angle-double-down bg-blue"></i>
 
                         <div class="timeline-item">
-                            <span class="time"><i class="fa fa-clock-o"></i> </span>
+                            <span class="time"><i class="fa fa-clock-o"></i>
+
+                                <?php
+                                $eid=$_GET['id'];
+                                $sql4="SELECT * FROM status_timestamp WHERE eventid=".$eid;
+                                $res4=mysqli_query($db,$sql4);
+                                $count=mysqli_fetch_array($res4);
+                                $time= $count['principal'];
+                                $date=datetime($time);
+                                echo $date;
+                                ?>
+
+                            </span>
 
                             <h3 class="timeline-header">Principal</h3>
 
@@ -236,7 +283,19 @@ role_check($_SESSION['role'],2);
                         <i class="fa fa-angle-double-down bg-blue"></i>
 
                         <div class="timeline-item">
-                            <span class="time"><i class="fa fa-clock-o"></i> </span>
+                            <span class="time"><i class="fa fa-clock-o"></i>
+
+                                <?php
+                                $eid=$_GET['id'];
+                                $sql4="SELECT * FROM status_timestamp WHERE eventid=".$eid;
+                                $res4=mysqli_query($db,$sql4);
+                                $count=mysqli_fetch_array($res4);
+                                $time= $count['sec'];
+                                $date=datetime($time);
+                                echo $date;
+                                ?>
+
+                            </span>
 
                             <h3 class="timeline-header">Maintenance Officials</h3>
 
@@ -258,7 +317,19 @@ role_check($_SESSION['role'],2);
                         <i class="fa fa-angle-double-down bg-blue"></i>
 
                         <div class="timeline-item">
-                            <span class="time"><i class="fa fa-clock-o"></i> ></span>
+                            <span class="time"><i class="fa fa-clock-o"></i>
+
+                                <?php
+                                $eid=$_GET['id'];
+                                $sql4="SELECT * FROM status_timestamp WHERE eventid=".$eid;
+                                $res4=mysqli_query($db,$sql4);
+                                $count=mysqli_fetch_array($res4);
+                                $time= $count['ao_team'];
+                                $date=datetime($time);
+                                echo $date;
+                                ?>
+
+                            </span>
 
                             <h3 class="timeline-header">Administration Team!</h3>
 
@@ -281,6 +352,185 @@ role_check($_SESSION['role'],2);
             </div>
                 <!-- /.col -->
             </div>
+
+            <?php
+
+
+            $sql5="SELECT * from event_content WHERE verify=1";
+            $res5=mysqli_query($db, $sql5);
+
+            while($row=mysqli_fetch_array($res5))
+            {
+
+                ?>
+
+                <div class="modal fade" id="eventid-<?php echo $row['eventid'];?>">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Review Your Application</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="rev-staff-name" class="control-label">Staff Name</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-staff-name" value="<?php echo $row['staffname'];?> " name="rev-staff-name" readonly="readonly" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-staff-email" class="control-label">Staff Email</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-staff-email"value="<?php echo $row['staffmail'];?>" name="rev-staff-email" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-staff-number" class="control-label">Staff Contact</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-staff-number" value="<?php echo $row['staffnumber'];?>" name="rev-staff-number" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-student-name" class="control-label">Student Name</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-student-name" value="<?php echo $row['studname'];?>" name="rev-student-name" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-student-email" class="control-label">Student Email</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-student-email" value="<?php echo $row['studmail'];?>" name="rev-student-email" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-student-number" class="control-label">Student Contact</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-student-number" value="<?php echo $row['studnumber'];?>" name="rev-student-number" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-event-name" class="control-label">Event Name</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-event-name" value="<?php echo $row['eventname'];?>" name="rev-event-name" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-org-dept" class="control-label">Organizing Dept</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-org-dept" value="<?php echo $row['orgdept'];?>" name="rev-org-dept" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-guest-particulars" class="control-label">Guest Particulars</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-guest-particulars" value="<?php echo $row['guestdetails'];?>" name="rev-guest-particulars" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-attending-classes" class="control-label">Attending Classes/Members</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-attending-classes" value="<?php echo $row['attclasses'];?>" name="rev-attending-classes" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-event-topic" class="control-label">Event Subject</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-event-topic" value="<?php echo $row['eventtopic'];?>" name="rev-event-topic" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-event-duration" class="control-label">Event Duration</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-event-duration" value="<?php echo $row['eventduration'];?>" name="rev-event-duration" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-chairs-aud" class="control-label">Chairs (Audience)</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-chairs-aud" value="<?php echo $row['chairsaud'];?>" name="rev-chairs-aud" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-lcdproj" class="control-label">LCD Projector</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-lcdproj" value="<?php echo $row['lcdproj'];?>" name="rev-lcdproj" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-ac" class="control-label">Air Conditioning</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-ac" value="<?php echo $row['ac'];?>" name="rev-ac" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-chairs-stg" class="control-label">Chairs (Stage)</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-chairs-stg" value="<?php echo $row['chairsstg'];?>" name="rev-chairs-stg" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-podium" class="control-label">Podium</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-podium" value="<?php echo $row['podium'];?>" name="rev-podium" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-oth-req" class="control-label">Other Requirements</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-oth-req" value="<?php echo $row['othreq'];?>" name="rev-oth-req" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-wired-mic" class="control-label">Wired Mic</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-wired-mic" value="<?php echo $row['wiredmic'];?>" name="rev-wired-mic" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rev-cordl-mic" class="control-label">Cordless Mic</label>
+
+                                    <div>
+                                        <input type="text" class="form-control" id="rev-cordl-mic" value="<?php echo $row['cordlmic'];?>" name="rev-cordl-mic" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+
+                <?php
+
+
+            }
+
+            ?>
+
         </section>
 
         <!-- Main content -->

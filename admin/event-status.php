@@ -140,7 +140,7 @@ role_check($_SESSION['role'],1);
                             <?php
 
 
-                            $sql="SELECT * from event_content WHERE verify=1";
+                            $sql="SELECT event_content.* from event_content,event_status WHERE event_content.eventid=event_status.eventid and event_status.principal=1 ";
                             $res=mysqli_query($db, $sql);
                             $sql1="SELECT * from event_status WHERE verify=1";
                             $res1=mysqli_query($db, $sql1);
@@ -174,6 +174,22 @@ role_check($_SESSION['role'],1);
                             <i class="fa fa-angle-double-down bg-blue"></i>
                             <div class="timeline-item">
 
+                                 <span class="time"><i class="fa fa-clock-o"></i>
+
+                                     <?php
+                                     $eid=$_GET['id'];
+                                     $sql4="SELECT * FROM status_timestamp WHERE eventid=".$eid;
+                                     $res4=mysqli_query($db,$sql4);
+                                     $count=mysqli_fetch_array($res4);
+                                     $time= $count['submit'];
+                                     $date=datetime($time);
+                                     echo $date;
+                                     ?>
+
+                                </span>
+
+                                <h3 class="timeline-header">Booking Submission</h3>
+
                                 <div class="timeline-body"> <h3>
                                         Your booking was successfully submitted!
                                     </h3>
@@ -187,7 +203,19 @@ role_check($_SESSION['role'],1);
                             <i class="fa fa-angle-double-down bg-blue"></i>
 
                             <div class="timeline-item">
-                                <span class="time"><i class="fa fa-clock-o"></i></span>
+                                <span class="time"><i class="fa fa-clock-o"></i>
+
+                                    <?php
+                                    $eid=$_GET['id'];
+                                    $sql4="SELECT * FROM status_timestamp WHERE eventid=".$eid;
+                                    $res4=mysqli_query($db,$sql4);
+                                    $count=mysqli_fetch_array($res4);
+                                    $time= $count['hod'];
+                                    $date=datetime($time);
+                                    echo $date;
+                                    ?>
+
+                                </span>
 
                                 <h3 class="timeline-header">Head of Department</h3>
 
@@ -210,7 +238,19 @@ role_check($_SESSION['role'],1);
                             <i class="fa fa-angle-double-down bg-blue"></i>
 
                             <div class="timeline-item">
-                                <span class="time"><i class="fa fa-clock-o"></i> </span>
+                                <span class="time"><i class="fa fa-clock-o"></i>
+
+                                    <?php
+                                    $eid=$_GET['id'];
+                                    $sql4="SELECT * FROM status_timestamp WHERE eventid=".$eid;
+                                    $res4=mysqli_query($db,$sql4);
+                                    $count=mysqli_fetch_array($res4);
+                                    $time= $count['principal'];
+                                    $date=datetime($time);
+                                    echo $date;
+                                    ?>
+
+                                </span>
 
                                 <h3 class="timeline-header">Principal</h3>
 
@@ -232,7 +272,19 @@ role_check($_SESSION['role'],1);
                             <i class="fa fa-angle-double-down bg-blue"></i>
 
                             <div class="timeline-item">
-                                <span class="time"><i class="fa fa-clock-o"></i> </span>
+                                <span class="time"><i class="fa fa-clock-o"></i>
+
+                                    <?php
+                                    $eid=$_GET['id'];
+                                    $sql4="SELECT * FROM status_timestamp WHERE eventid=".$eid;
+                                    $res4=mysqli_query($db,$sql4);
+                                    $count=mysqli_fetch_array($res4);
+                                    $time= $count['sec'];
+                                    $date=datetime($time);
+                                    echo $date;
+                                    ?>
+
+                                </span>
 
                                 <h3 class="timeline-header">Maintenance Officials</h3>
 
@@ -254,7 +306,19 @@ role_check($_SESSION['role'],1);
                             <i class="fa fa-angle-double-down bg-blue"></i>
 
                             <div class="timeline-item">
-                                <span class="time"><i class="fa fa-clock-o"></i> ></span>
+                                <span class="time"><i class="fa fa-clock-o"></i>
+
+                                    <?php
+                                    $eid=$_GET['id'];
+                                    $sql4="SELECT * FROM status_timestamp WHERE eventid=".$eid;
+                                    $res4=mysqli_query($db,$sql4);
+                                    $count=mysqli_fetch_array($res4);
+                                    $time= $count['ao_team'];
+                                    $date=datetime($time);
+                                    echo $date;
+                                    ?>
+
+                                </span>
 
                                 <h3 class="timeline-header">Administration Team!</h3>
 

@@ -250,7 +250,7 @@
     <br>
     <div class='_2'>Have a nice day!</div>
     <br>
-    <a class='btn' href='#'>Go back</a>
+    <a class='btn' href="javascript:window.close()">Go back</a>
 </div>
 
 

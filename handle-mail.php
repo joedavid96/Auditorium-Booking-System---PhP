@@ -55,145 +55,206 @@ if(isset($_GET['id']) && isset($_GET['key']) ){
                 $sql = "UPDATE event_status SET hod=2 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
-                    $url="approve.php";
+                    $url="reject.php";
                 redirect($url);
 
                 }
                 else{
-                    echo "hod operation failed";
+                    $error="error.php";
+                    redirect($error);
                 }
             }elseif ($pos=="principal"){
                 $sql = "UPDATE event_status SET principal=2 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
 
-
-
-                    echo "principal operation success";
+                    $url="reject.php";
+                    redirect($url);
 
                 }
                 else{
-                    echo "principal operation failed";
+                    $error="error.php";
+                    redirect($error);
                 }
             }
         }
         if($res=="accept" && $res!="reject")
         {
 
-            echo "accepted";
             if($pos=="hod")
             {
                 $sql = "UPDATE event_status SET hod=1 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
                     eventMail($principal_mail, $eventid, $db, "principal" );
-                    echo "hod operation success";
+                    $sql1="UPDATE status_timestamp SET hod = CURRENT_TIMESTAMP WHERE eventid=".$eventid;
+                    $res1=mysqli_query($db,$sql1);
+                    if($res1){
+                        $url="approve.php";
+                        redirect($url);
+                    }
+                    else{
+                        $error="error.php";
+                        redirect($error);
+                    }
 
                 }
                 else{
-                    echo "hod operation failed";
+                    $error="error.php";
+                    redirect($error);
                 }
             }elseif ($pos=="principal"){
                 $sql = "UPDATE event_status SET principal=1 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
                     eventMail($fo_mail, $eventid, $db, "fo" );
-                    echo "principal operation success";
+                    $sql1="UPDATE status_timestamp SET principal = CURRENT_TIMESTAMP WHERE eventid=".$eventid;
+                    $res1=mysqli_query($db,$sql1);
+                    $sql2="INSERT into supervisor_assign (eventid, supervisor, seen) values ('$eventid',0,0)";
+                    $res2=mysqli_query($db,$sql2);
+                    if($res1){
+                        $url="approve.php";
+                        redirect($url);
+                    }
+                    else{
+                        $error="error.php";
+                        redirect($error);
+                    }
 
                 }
                 else{
-                    echo "principal operation failed";
+                    $error="error.php";
+                    redirect($error);
                 }
             }elseif ($pos=="fo"){
                 $sql = "UPDATE event_status SET fo=1 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
                     eventMail($smc_main_mail, $eventid, $db, "smc_main" );
-                    echo "fo operation success";
+                    $sql1="UPDATE status_timestamp SET fo = CURRENT_TIMESTAMP WHERE eventid=".$eventid;
+                    $res1=mysqli_query($db,$sql1);
+                    if($res1){
+                        $url="approve.php";
+                        redirect($url);
+                    }
+                    else{
+                        $error="error.php";
+                        redirect($error);
+                    }
 
                 }
                 else{
-                    echo "fo operation failed";
+                    $error="error.php";
+                    redirect($error);
                 }
             }elseif($pos=="smc_main"){
                 $sql = "UPDATE event_status SET smc_main=1 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
                     eventMail($sec_main_mail, $eventid, $db, "sec_main" );
-                    echo "smc_main operation success";
+                    $sql1="UPDATE status_timestamp SET smc_main = CURRENT_TIMESTAMP WHERE eventid=".$eventid;
+                    $res1=mysqli_query($db,$sql1);
+                    if($res1){
+                        $url="acknowledge.php";
+                        redirect($url);
+                    }
+                    else{
+                        $error="error.php";
+                        redirect($error);
+                    }
 
                 }
                 else{
-                    echo "smc_main operation failed";
+                    $error="error.php";
+                    redirect($error);
                 }
             }elseif($pos=="sec_main"){
                 $sql = "UPDATE event_status SET sec_main=1 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
                     eventMail($sec_mail, $eventid, $db, "sec" );
-                    echo "sec_main operation success";
+                    $sql1="UPDATE status_timestamp SET sec_main = CURRENT_TIMESTAMP WHERE eventid=".$eventid;
+                    $res1=mysqli_query($db,$sql1);
+                    if($res1){
+                        $url="acknowledge.php";
+                        redirect($url);
+                    }
+                    else{
+                        $error="error.php";
+                        redirect($error);
+                    }
 
                 }
                 else{
-                    echo "sec_main operation failed";
+                    $error="error.php";
+                    redirect($error);
                 }
             }elseif($pos=="sec"){
                 $sql = "UPDATE event_status SET sec=1 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
                     eventMail($ao_team_mail, $eventid, $db, "ao_team" );
-                    echo "sec operation success";
+                    $sql1="UPDATE status_timestamp SET sec = CURRENT_TIMESTAMP WHERE eventid=".$eventid;
+                    $res1=mysqli_query($db,$sql1);
+                    if($res1){
+                        $url="acknowledge.php";
+                        redirect($url);
+                    }
+                    else{
+                        $error="error.php";
+                        redirect($error);
+                    }
 
                 }
                 else{
-                    echo "sec operation failed";
+                    $error="error.php";
+                    redirect($error);
                 }
             }elseif($pos=="ao_team"){
                 $sql = "UPDATE event_status SET ao_team=1 WHERE eventid=".$eventid;
                 $res=mysqli_query($db, $sql);
                 if($res){
-                    echo "ao_team operation success";
+                    $sql1="UPDATE status_timestamp SET ao_team = CURRENT_TIMESTAMP WHERE eventid=".$eventid;
+                    $res1=mysqli_query($db,$sql1);
+                    if($res1){
+                        $url="acknowledge.php";
+                        redirect($url);
+                    }
+                    else{
+                        $error="error.php";
+                        redirect($error);
+                    }
 
                 }
                 else{
-                    echo "ao_team operation failed";
+                    $error="error.php";
+                    redirect($error);
+                }
+            }
+            elseif($pos=="supervisor"){
+                $sql = "UPDATE supervisor_assign SET seen=1 WHERE eventid=".$eventid;
+                $res=mysqli_query($db, $sql);
+                if($res){
+                    $url="acknowledge.php";
+                    redirect($url);
+                }
+                else{
+                    $error="error.php";
+                    redirect($error);
                 }
             }
 
         }
 
-
-
-
-
-        echo "success";
-
-
     }else{
 
-        echo "wrong key or eventid";
+        $error="error.php";
+        redirect($error);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }else{
 
-    echo "no parameters or key found";
+    $error="error.php";
+    redirect($error);
 }
-
-
-
-
-
 ?>

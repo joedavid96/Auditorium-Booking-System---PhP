@@ -73,8 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="/favicon.png" rel="icon" type="image/x-icon"/>
-    <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+    <link href="favicon.png" rel="icon" type="image/x-icon"/>
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 
 
     <title>Nalli Booking | Log in</title>

@@ -7,20 +7,31 @@ if(isset($_POST['submit'])) {
     $password1 = $_POST['old-password'];
     $password2 = $_POST['new-password'];
 
-
     $sql2="SELECT * from login WHERE userid='".$_SESSION['login_user']."'";
     $res2=mysqli_query($db, $sql2);
     $count2=mysqli_fetch_array($res2);
     $password = $count2['password'];
 
-    if($password==$password1)
     {
         $sql="UPDATE login SET password='".$password2."' WHERE userid='".$_SESSION['login_user']."'";
+        $res=mysqli_query($db,$sql);
+        if($res)
+        {
+            echo '<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon  fa-thumbs-up"></i>Password Changed Successfully!</h4>
+               Ypur password has been successfully changed. Have a nice day!
+              </div>';
+        }
+        else{
+            echo '<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon  fa-thumbs-up"></i>OOOPS!!</h4>
+                Something went wrong! Please try again.
+              </div>';
+        }
     }
-
 }
-
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -164,7 +175,7 @@ if(isset($_POST['submit'])) {
 
                                 </div>
                                 <div class="box-footer">
-                                    <input type="submit" class="col-xs-12 btn btn-primary btn-load btn-lg" data-loading-text="Changing Password..." value="Change Password">
+                                    <button type="submit" class="col-xs-12 btn btn-primary btn-load btn-lg" name="submit" value="submit">Change Password</button>
                                 </div>
 
                             </div>

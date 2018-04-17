@@ -27,14 +27,29 @@ if(isset($_GET['action']))
             $sql3="INSERT into event_status(eventid, hod, principal, fo, smc_main, sec_main, sec, ao_team) VALUES ('$eid',0,0,0,0,0,0,0 )";
             $res3=mysqli_query($db, $sql3);
             eventMail($hod_mail, $_GET['id'], $db, "hod");
-            $msg='<div class="alert alert-success alert-dismissible">
+            $sql6="INSERT into status_timestamp values ('$eid',CURRENT_TIMESTAMP,'','','','','','','')";
+            $res6=mysqli_query($db,$sql6);
+            if($res6) {
+                $msg = '<div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <h4><i class="icon  fa-thumbs-up"></i>Booking Submitted!</h4>
                Your booking has been successfully submitted. Bookings can be tracked through the Booking Status Page. Thank you.
               </div>';
+            }
+            else{
+                echo "<div class=\"alert alert-danger alert-dismissible\">
+                <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>
+                <h4><i class=\"icon  fa-thumbs-up\"></i>OOOPS!!!</h4>
+                Something went wrong. Please try again!
+              </div>";
+            }
         }else{
 
-            echo 'error';
+            echo "<div class=\"alert alert-danger alert-dismissible\">
+                <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>
+                <h4><i class=\"icon  fa-thumbs-up\"></i>OOOPS!!!</h4>
+                Something went wrong. Please try again!
+              </div>";
         }
     }
 
@@ -46,14 +61,18 @@ if(isset($_GET['action']))
         $res8=mysqli_query($db, $sql8);
         if($res8){
 
-            $msg='<div class="alert alert-danger alert-dismissible">
+            $msg='<div class="alert alert-warning alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <h4><i class="icon  fa-thumbs-up"></i>Booking Deleted!</h4>
                 Your booking has been successfully deleted.
               </div>';
         }else{
 
-            echo 'error';
+            echo "<div class=\"alert alert-danger alert-dismissible\">
+                <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>
+                <h4><i class=\"icon  fa-thumbs-up\"></i>OOOPS!!!</h4>
+                Something went wrong. Please try again!
+              </div>";;
         }
 
 
@@ -102,14 +121,16 @@ if(isset($_POST['submit'])) {
 
     $sql2="SELECT dept from login WHERE userid='".$_SESSION['login_user']."'";
     $res2=mysqli_query($db, $sql2);
-    $count2=mysqli_fetch_array($res2);
+    $count2 = mysqli_fetch_array($res2);
     $dept = $count2['dept'];
 
 
-    $sql4 = "INSERT into event_content (eventid, staffname, staffmail, staffnumber, studname, studmail, studnumber, eventname, orgdept, guestdetails, attclasses,
- eventtopic, eventduration, wiredmic, cordlmic, chairsaud, lcdproj, ac, chairsstg, podium, othreq, verify) values ('$eventid', '$staff_name','$staff_mail',
- '$staff_number','$stud_name','$stud_mail','$stud_number','$event_name','$org_dept','$guest_particulars','$attending_classes','$event_topic','$event_duration',
- '$wired_mic','$cordl_mic','$chairs_aud','$lcd_proj','$ac','$chairs_stg','$podium','$oth_req',0)";
+
+    $sql4 = "INSERT into nalli_demo.event_content (eventid, staffname, staffmail, staffnumber, studname, studmail, studnumber, eventname, orgdept,
+ guestdetails, attclasses, eventtopic, eventduration, wiredmic, cordlmic, chairsaud, lcdproj, ac, chairsstg, podium, othreq, verify, dept)
+  values ('$eventid','$staff_name','$staff_mail',
+'$staff_number','$stud_name','$stud_mail','$stud_number','$event_name','$org_dept','$guest_particulars','$attending_classes',
+'$event_topic','$event_duration','$wired_mic','$cordl_mic','$chairs_aud','$lcd_proj','$ac','$chairs_stg','$podium','$oth_req','0','$dept')";
     $res4=mysqli_query($db, $sql4);
 
 

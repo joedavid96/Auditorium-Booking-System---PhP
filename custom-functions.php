@@ -11,6 +11,13 @@ $smc_main_mail = "d22005a6ac-12d968@inbox.mailtrap.io";
 $sec_main_mail = "d22005a6ac-12d968@inbox.mailtrap.io";
 $sec_mail = "d22005a6ac-12d968@inbox.mailtrap.io";
 $ao_team_mail = "d22005a6ac-12d968@inbox.mailtrap.io";
+$sv1_mail= "d22005a6ac-12d968@inbox.mailtrap.io";
+$sv2_mail= "d22005a6ac-12d968@inbox.mailtrap.io";
+$sv3_mail= "d22005a6ac-12d968@inbox.mailtrap.io";
+$sv4_mail= "d22005a6ac-12d968@inbox.mailtrap.io";
+$sv5_mail= "d22005a6ac-12d968@inbox.mailtrap.io";
+$sv6_mail= "d22005a6ac-12d968@inbox.mailtrap.io";
+
 
 function mailContent($id, $db, $approve_by){
 
@@ -111,6 +118,15 @@ function mailContent($id, $db, $approve_by){
 
 
     }
+    if($approve_by=="supervisor")
+    {
+
+        $body.= '<a href="http://localhost/handle-mail.php?id='.$id.'&pos=supervisor&res=accept&key=abcd"> Acknowledge </a><br>';
+
+
+
+    }
+
 
 
 
@@ -120,6 +136,44 @@ function mailContent($id, $db, $approve_by){
 
 }
 
+function smsContent($id, $db, $approve_by){
+    $body="<table><tbody>";
+
+
+    $sql =" SELECT * from event_content WHERE eventid=".$id;
+    $res=mysqli_query($db, $sql);
+    $content=mysqli_fetch_array($res);
+
+    $body.="<tr><td><b>Event Name</b></td><td>".$content['eventname']."</td></tr>";
+    $body.="<tr><td><b>Staff Coordinator</b></td></tr>";
+    $body.="<tr><td>Name</td><td>".$content['staffname']."</td></tr>";
+    $body.="<tr><td>Email</td><td>".$content['staffmail']."</td></tr>";
+    $body.="<tr><td>Contact</td><td>".$content['staffnumber']."</td></tr>";
+    $body.="<tr><td><b>Student Coordinator</b></td></tr>";
+    $body.="<tr><td>Name</td><td>".$content['studname']."</td></tr>";
+    $body.="<tr><td>Email</td><td>".$content['studmail']."</td></tr>";
+    $body.="<tr><td>Contact</td><td>".$content['studnumber']."</td></tr>";
+    $body.="<tr><td><b>About the Event</b></td></tr>";
+    $body.="<tr><td>Event Name</td><td>".$content['eventname']."</td></tr>";
+    $body.="<tr><td>Organizing Dept</td><td>".$content['orgdept']."</td></tr>";
+    $body.="<tr><td>Guest Details</td><td>".$content['guestdetails']."</td></tr>";
+    $body.="<tr><td>Attending Classes</td><td>".$content['attclasses']."</td></tr>";
+    $body.="<tr><td>Event Topic</td><td>".$content['eventtopic']."</td></tr>";
+    $body.="<tr><td>Event Duration</td><td>".$content['eventduration']."</td></tr>";
+    $body.="<tr><td><b>Event Specifications</b></td></tr>";
+    $body.="<tr><td>Chairs (Audience)</td><td>".$content['chairsaud']."</td></tr>";
+    $body.="<tr><td>LCD Projector</td><td>".$content['lcdproj']."</td></tr>";
+    $body.="<tr><td>Air Conditioning</td><td>".$content['ac']."</td></tr>";
+    $body.="<tr><td>Chairs (Stage)</td><td>".$content['chairsstg']."</td></tr>";
+    $body.="<tr><td>Podium</td><td>".$content['podium']."</td></tr>";
+    $body.="<tr><td>Other Requirements</td><td>".$content['othreq']."</td></tr>";
+    $body.="<tr><td>Wired Mic</td><td>".$content['wiredmic']."</td></tr>";
+    $body.="<tr><td>Cordless Mic</td><td>".$content['cordlmic']."</td></tr>";
+
+    $body.="</tbody></table>";
+
+    return $body;
+}
 
 
 
@@ -142,7 +196,15 @@ function eventMail($to, $eventid, $db, $approve_by){
     $mail->setFrom('xyz@gmail.com', 'Nalli  Booking');
     $mail->AddAddress($to , 'mailtrap');
 
-    $mail->Subject  =  'New regis';
+
+    $sql = "SELECT * from nalli_demo.event_content where eventid=".$eventid;
+    $res=mysqli_query($db,$sql);
+    $row=mysqli_fetch_array($res);
+    $event_name=$row['eventname'];
+    $event_date=$row['eventduration'];
+
+
+    $mail->Subject  =  "Nalli Booking"." : ".$event_name." : ".$event_date;
     $mail->IsHTML(true);
     $mail->Body    = mailContent($eventid, $db, $approve_by);
 

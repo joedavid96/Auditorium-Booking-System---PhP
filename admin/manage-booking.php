@@ -143,7 +143,8 @@ role_check($_SESSION['role'],1);
                                 <?php
 
 
-                                $sql="SELECT * from event_content WHERE verify=1";
+                                $sql="SELECT event_content.* from event_content,event_status WHERE event_content.eventid=event_status.eventid and event_status.principal=1 ";
+
                                 $res=mysqli_query($db, $sql);
                                 $sql1="SELECT * from event_status WHERE verify=1";
                                 $res1=mysqli_query($db, $sql1);
